@@ -20,7 +20,20 @@ public class ProductoDAO implements GenericDAO<Producto, Integer>{
 
     @Override
     public void save(Producto entity) throws SQLException {
-        String sql = "INSERT INTO producto(codigo, nombre , precio, codigo_fabricacion) VALUES(?,?,?,?)";
+        //llamaria a findby em el servlet para ver si el codigo esta duplicado
+        //forma 1 consultar sql con el find by id
+        // forma 2 sqlrecogiendo la excepcion de la bd
+        // forma 3 findall y busco en la lista
+        //obligatoria mente deno implementar equals hashcode
+        String sql = "INSERT INTO producto(codigo, nombre , precio, codigo_fabricante) VALUES(?,?,?,?)";
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1, entity.getCodigo());
+            statement.setString(2, entity.getNombre());
+            statement.setBigDecimal(3, entity.getPrecio());
+            statement.setInt(4, entity.getCodigo_fabricante());
+            statement.executeUpdate();
+
+        }
     }
 
     @Override
@@ -71,10 +84,20 @@ public class ProductoDAO implements GenericDAO<Producto, Integer>{
     @Override
     public void update(Producto entity) throws SQLException {
 
+
     }
 
     @Override
     public void delete(Integer integer) throws SQLException {
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM PRODUCTO WHERE codigo = ?")){
+            preparedStatement.setInt(1, integer);
+            preparedStatement.execute();
+
+
+        }catch (SQLException e){
+
+        }
 
     }
 }

@@ -37,3 +37,7 @@ public interface GenericDAO<T, ID> {
     // DELETE
     void delete(ID id) throws SQLException;
 }
+
+
+// pendiente declarar un metodo abtracto find by nombre
+//creo findbyname en el caso de que no lo declare en la inteface en cuaquier caso debo imprementarlo aqui

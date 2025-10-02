@@ -76,6 +76,7 @@
     <fieldset class="fieldset-principal">
         <legend>Listado de productos de la tienda:</legend>
 
+        <!-- puedo hacer mas cosillas (filtrar por id o filtar por nombre)-->
         <p><input type="submit" value="Obtener listado de productos en formato tabla"/></p>
     </fieldset>
 </form>
@@ -83,9 +84,9 @@
 <form action="productos/modificar" method="POST" target="_blank">
     <fieldset class="fieldset-principal">
         <legend>Datos del producto</legend>
-        <!--<p>
-            <label for="codigo">Código:<input type="text" name="codigo"/></label>
-        </p>-->
+
+        <label for="codigo">Código:<input type="text" name="codigo" id="codigo"/></label>
+
         <label for="nombre">Nombre:<input type="text" name="nombre" id="nombre"/></label>
         <label for="precio">Precio:<input type="text" name="precio" id="precio"/></label>
         <!-- <p>
@@ -111,7 +112,7 @@
         <label for="operacion1">Insertar nuevo producto con todos los campos:<input type="radio" value="insert" id="operacion1" name="operacion" required/></label>
         <label for="operacion2">Actualizar nombre del producto:<input type="radio" name="operacion" id="operacion2" value="update" required/></label>
         <label for="operacion3">Borrar por código de producto:<input type="radio" name="operacion" id="operacion3" value="delete" required/></label>
-        <label for="codigo">Código del producto (actualizar/borrar):<input type="text" name="codigo" id="codigo"/></label>
+        <label for="codigo">Código del producto (actualizar/borrar):<input type="text" name="codigoBorrar" id="codigo"/></label>
 
     </fieldset>
 
