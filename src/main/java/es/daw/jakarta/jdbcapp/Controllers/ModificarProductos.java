@@ -49,6 +49,7 @@ public class ModificarProductos extends HttpServlet {
             return;
         }
 
+        // Desmontanto para añadir las clases de la interfaz productodao
         try {
             GenericDAO<Producto, Integer> daop = new ProductoDAO();
 

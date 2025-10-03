@@ -25,12 +25,12 @@
 </head>
 <body class="bg-light">
 <%
-    List<Producto> productos = (List<Producto>)request.getAttribute("productos");
+    Optional<Producto> productosId = (Optional<Producto>)request.getAttribute("productosId");
 %>
 <div class="container mt-5">
     <h2 class="mb-4 text-primary">📋 Productos disponibles</h2>
 
-<% if(productos != null && !productos.isEmpty())  {%>
+    <% if(productosId.isPresent())  {%>
     <div class="table-responsive">
         <table class="table table-bordered table-custom">
             <thead class="table-dark">
@@ -44,7 +44,7 @@
             <tbody>
 
             <%
-                for (Producto p : productos) { %>
+                Producto p = productosId.get();  %>
 
             <tr>
                 <td><%= p.getCodigo() %></td>
@@ -52,7 +52,7 @@
                 <td><%= p.getPrecio() %></td>
                 <td><%= p.getCodigo_fabricante() %></td>
             </tr>
-             <%  } %>
+            <%  } %>
 
 
             </tbody>

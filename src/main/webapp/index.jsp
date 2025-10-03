@@ -72,11 +72,13 @@
 </head>
 <body>
 <h1>PRODUCTOS JDBC DAO</h1>
-<form action="productos/ver" method="GET" target="_blank">
+<form action="productos/ver" method="POST" target="_blank">
     <fieldset class="fieldset-principal">
         <legend>Listado de productos de la tienda:</legend>
 
         <!-- puedo hacer mas cosillas (filtrar por id o filtar por nombre)-->
+        <label for="codigoid">Código:<input type="text" name="codigoid" id="codigoid"/></label>
+
         <p><input type="submit" value="Obtener listado de productos en formato tabla"/></p>
     </fieldset>
 </form>
@@ -112,7 +114,7 @@
         <label for="operacion1">Insertar nuevo producto con todos los campos:<input type="radio" value="insert" id="operacion1" name="operacion" required/></label>
         <label for="operacion2">Actualizar nombre del producto:<input type="radio" name="operacion" id="operacion2" value="update" required/></label>
         <label for="operacion3">Borrar por código de producto:<input type="radio" name="operacion" id="operacion3" value="delete" required/></label>
-        <label for="codigo">Código del producto (actualizar/borrar):<input type="text" name="codigoBorrar" id="codigo"/></label>
+        <label for="codigo">Código del producto (actualizar/borrar):<input type="text" name="codigoBorrar" id="codigoborrar"/></label>
 
     </fieldset>
 

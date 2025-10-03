@@ -38,24 +38,26 @@ public class ProductoDAO implements GenericDAO<Producto, Integer>{
 
     @Override
     public Optional<Producto> findById(Integer integer) throws SQLException {
-        List<Producto> findById = new ArrayList<>();
         String sql = "SELECT * FROM PRODUCTO WHERE ID = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, integer);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                findById.add(
-                        new Producto(
+
+                        Producto pr = new Producto(
                                 resultSet.getInt("codigo"),
                                 resultSet.getString("nombre"),
                                 resultSet.getBigDecimal("precio"),
                                 resultSet.getInt("codigo_fabricante")
-                        )
-                );
+                        );
+                return Optional.of(pr);
+
             }
-            return findById.isEmpty() ? Optional.empty() : Optional.of(findById.get(0));
+
         }
+        return Optional.empty();
+
     }
 
     @Override
@@ -84,6 +86,14 @@ public class ProductoDAO implements GenericDAO<Producto, Integer>{
     @Override
     public void update(Producto entity) throws SQLException {
 
+        try(PreparedStatement ps = connection.prepareStatement(" UPDATE producto SET nombre = ?, precio = ?, codigo_fabricante = ? WHERE codigo = ?")){
+            ps.setString(1, entity.getNombre());
+            ps.setBigDecimal(2, entity.getPrecio());
+            ps.setInt(3, entity.getCodigo_fabricante());
+            ps.setInt(4, entity.getCodigo());
+            ps.executeUpdate();
+
+        }
 
     }
 
