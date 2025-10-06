@@ -72,7 +72,7 @@
 </head>
 <body>
 <h1>PRODUCTOS JDBC DAO</h1>
-<form action="productos/ver" method="POST" target="_blank">
+<form action="productos/ver" method="GET" target="_blank">
     <fieldset class="fieldset-principal">
         <legend>Listado de productos de la tienda:</legend>
 

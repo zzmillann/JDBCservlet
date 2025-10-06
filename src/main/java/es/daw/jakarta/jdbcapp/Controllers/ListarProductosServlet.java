@@ -8,8 +8,10 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.daw.jakarta.jdbcapp.Model.Fabricante;
 import es.daw.jakarta.jdbcapp.Model.Producto;
 import es.daw.jakarta.jdbcapp.Repository.DBConnection;
+import es.daw.jakarta.jdbcapp.Repository.FabricanteDAO;
 import es.daw.jakarta.jdbcapp.Repository.GenericDAO;
 import es.daw.jakarta.jdbcapp.Repository.ProductoDAO;
 import jakarta.servlet.ServletException;
@@ -24,10 +26,13 @@ private static final Logger LOG = Logger.getLogger(ListarProductosServlet.class.
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException , ServletException {
 
         List<Producto> productos = new ArrayList<>();
+        List<Fabricante> fabricantes = new ArrayList<>();
         try{
             GenericDAO<Producto,Integer> dawP = new ProductoDAO();
-            productos = dawP.findAll();
+            GenericDAO<Fabricante,Integer> dawF = new FabricanteDAO();
 
+            productos = dawP.findAll();
+            fabricantes = dawF.findAll();
         }catch(SQLException e){
             LOG.severe(e.getMessage());
             request.setAttribute("error", e.getMessage());
@@ -35,6 +40,7 @@ private static final Logger LOG = Logger.getLogger(ListarProductosServlet.class.
         }
 
         request.setAttribute("productos", productos);
+        request.setAttribute("fabricantes", fabricantes);
         getServletContext().getRequestDispatcher("/informe.jsp").forward(request, response);
 
     }

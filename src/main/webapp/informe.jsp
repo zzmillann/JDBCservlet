@@ -3,7 +3,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="jakarta.enterprise.inject.spi.configurator.ProducerConfigurator" %>
 <%@ page import="java.util.Optional" %>
-
+<%@ page import="es.daw.jakarta.jdbcapp.Model.Fabricante" %>
+<%@ page import="es.daw.jakarta.jdbcapp.utils.Utils" %>
 <html>
 <head>
     <title>Lista de Productos</title>
@@ -26,6 +27,8 @@
 <body class="bg-light">
 <%
     List<Producto> productos = (List<Producto>)request.getAttribute("productos");
+    List<Fabricante> fabricantes = (List<Fabricante>)request.getAttribute("fabricantes");
+
 %>
 <div class="container mt-5">
     <h2 class="mb-4 text-primary">📋 Productos disponibles</h2>
@@ -39,6 +42,10 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Precio</th>
                 <th scope="col">Fabricante</th>
+                <th scope="col"> Nombre Fabricante </th>
+                <th scope="col"> Borrar </th>
+                <th scope="col"> Modificar </th>
+
             </tr>
             </thead>
             <tbody>
@@ -51,6 +58,18 @@
                 <td><%= p.getNombre() %></td>
                 <td><%= p.getPrecio() %></td>
                 <td><%= p.getCodigo_fabricante() %></td>
+                <td><%= Utils.obtenerNombreFabricante(fabricantes, p.getCodigo_fabricante())%></td>
+                <td>
+                    <form action="borrar" method="POST">
+                        <input type="hidden" name="codigo" value="<%=p.getCodigo()%>">
+                        <button type="submit" class="btn btn-sm btn-danger" onsubmit="return confirm('seguro que deseas borrar?')">Borrar</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="borrar" method="POST">
+                        <button type="submit" class="btn btn-sm btn-info" onsubmit="return confirm('seguro que deseas modificar?')">Modificar</button>
+                    </form>
+                </td>
             </tr>
              <%  } %>
 

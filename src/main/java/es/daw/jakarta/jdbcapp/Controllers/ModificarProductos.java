@@ -1,6 +1,8 @@
 package es.daw.jakarta.jdbcapp.Controllers;
 
+import es.daw.jakarta.jdbcapp.Model.Fabricante;
 import es.daw.jakarta.jdbcapp.Model.Producto;
+import es.daw.jakarta.jdbcapp.Repository.FabricanteDAO;
 import es.daw.jakarta.jdbcapp.Repository.GenericDAO;
 import es.daw.jakarta.jdbcapp.Repository.ProductoDAO;
 import jakarta.servlet.ServletException;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 
 @WebServlet(name = "ModificarProductos", value = "/productos/modificar")
@@ -52,6 +55,7 @@ public class ModificarProductos extends HttpServlet {
         // Desmontanto para añadir las clases de la interfaz productodao
         try {
             GenericDAO<Producto, Integer> daop = new ProductoDAO();
+            GenericDAO<Fabricante, Integer> dafo = new FabricanteDAO();
 
             Producto newproducto = new Producto(
                     Integer.parseInt(codigo),
@@ -78,16 +82,28 @@ public class ModificarProductos extends HttpServlet {
                 }
             }
 
+            //SALIDA
+            List<Producto> productos = daop.findAll();
+            List<Fabricante> fabricantes = dafo.findAll();
+
+            productos.sort((Producto p1, Producto p2) -> p2.getCodigo().compareTo(p1.getCodigo()));
+            req.setAttribute("productos", productos);
+            req.setAttribute("fabricantes", fabricantes);
+
+            getServletContext().getRequestDispatcher("/informe.jsp").forward(req, resp);
+
             // Si llega aquí, la operación fue exitosa → Respuesta HTML simple
             resp.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = resp.getWriter()) {
                 out.println("<html>");
                 out.println("<head><title>Producto modificado</title></head>");
                 out.println("<body>");
-                out.println("<h1>✅ Operación realizada correctamente</h1>");
+                out.println("<h1>✅ Operación &lt;" +  operacion + " realizada correctamente</h1>");
                 out.println("<p><a href=\"/JDBCapp_war_exploded/\">Volver al inicio</a></p>");
                 out.println("</body></html>");
             }
+
+
 
         } catch (SQLException ex) {
             log.severe(ex.getMessage());
