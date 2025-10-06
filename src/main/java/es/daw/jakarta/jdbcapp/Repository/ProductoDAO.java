@@ -38,7 +38,7 @@ public class ProductoDAO implements GenericDAO<Producto, Integer>{
 
     @Override
     public Optional<Producto> findById(Integer integer) throws SQLException {
-        String sql = "SELECT * FROM PRODUCTO WHERE ID = ?";
+        String sql = "SELECT * FROM PRODUCTO WHERE codigo = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, integer);

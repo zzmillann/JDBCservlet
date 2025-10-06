@@ -82,6 +82,15 @@
         <p><input type="submit" value="Obtener listado de productos en formato tabla"/></p>
     </fieldset>
 </form>
+<form action="productos/ver" method="GET" target="_blank">
+    <fieldset class="fieldset-principal">
+        <legend>Listado de productos de la tienda:</legend>
+
+
+
+        <p><input type="submit" value="Obtener listado de productos en formato tabla"/></p>
+    </fieldset>
+</form>
 
 <form action="productos/modificar" method="POST" target="_blank">
     <fieldset class="fieldset-principal">

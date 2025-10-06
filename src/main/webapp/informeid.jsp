@@ -52,7 +52,7 @@
                 <td><%= p.getPrecio() %></td>
                 <td><%= p.getCodigo_fabricante() %></td>
             </tr>
-            <%  } %>
+
 
 
             </tbody>

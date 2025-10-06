@@ -39,6 +39,10 @@ private static final Logger LOG = Logger.getLogger(ListarProductosServlet.class.
 
     }
 
+
+
+
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
 
         Optional<Producto> productos = Optional.empty();
