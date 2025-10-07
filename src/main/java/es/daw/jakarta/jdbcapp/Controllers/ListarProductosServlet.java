@@ -41,7 +41,7 @@ private static final Logger LOG = Logger.getLogger(ListarProductosServlet.class.
 
         request.setAttribute("productos", productos);
         request.setAttribute("fabricantes", fabricantes);
-        getServletContext().getRequestDispatcher("/informe.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/productos.jsp").forward(request, response);
 
     }
 
