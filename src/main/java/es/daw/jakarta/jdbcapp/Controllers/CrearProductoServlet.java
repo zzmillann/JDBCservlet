@@ -18,13 +18,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/productos/crear")
+@WebServlet(value = "/productos/crear" , name = "CrearProductoServlet")
 public class CrearProductoServlet extends HttpServlet {
 
     private GenericDAO<Fabricante, Integer> genericDAO;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         try {
             genericDAO = new FabricanteDAO();
         } catch (SQLException e) {
@@ -39,7 +40,7 @@ public class CrearProductoServlet extends HttpServlet {
         try {
             fabricantes = genericDAO.findAll();
             req.setAttribute("fabricantes", fabricantes);
-            getServletContext().getRequestDispatcher("/formularioProducto.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/formularioProductos.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -80,7 +81,6 @@ public class CrearProductoServlet extends HttpServlet {
         // Desmontanto para añadir las clases de la interfaz productodao
         try {
             GenericDAO<Producto, Integer> daop = new ProductoDAO();
-            GenericDAO<Fabricante, Integer> dafo = new FabricanteDAO();
 
             Producto newproducto = new Producto(
                     Integer.parseInt(codigo),
@@ -92,7 +92,9 @@ public class CrearProductoServlet extends HttpServlet {
             daop.save(newproducto);
 
         } catch (SQLException e) {
-            req.setAttribute("error", e.getMessage());
+
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            return;
         }
     resp.sendRedirect(req.getContextPath() + "/productos/ver");
 

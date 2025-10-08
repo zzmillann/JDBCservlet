@@ -28,7 +28,7 @@
         Producto producto = (Producto) request.getAttribute("producto");
         boolean esEdicion = producto != null;
         String titulo = esEdicion ? "Editar" : "Insertar nuevo producto";
-        String accion = esEdicion?"update":"insert";
+        String accion = esEdicion?"actualizar":"crear";
 %>
 <div class="container">
     <div class="form-container">

@@ -26,7 +26,7 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-primary mb-0">📦 Productos disponibles</h2>
-        <a href="productos/crear" class="btn btn-success">➕ Añadir producto</a>
+        <a href="<%=request.getContextPath()%>/productos/crear" class="btn btn-success">➕ Añadir producto</a>
     </div>
 
     <%
@@ -58,7 +58,7 @@
                 <td><%= p.getPrecio() %></td>
                 <td><%= nombreFab %></td>
                 <td>
-                    <form action="productos/editar" method="get">
+                    <form action="<%= request.getContextPath() %>/productos/editar" method="get">
                         <input type="hidden" name="codigo" value="<%= p.getCodigo() %>">
                         <button type="submit" class="btn btn-warning btn-sm">✏️</button>
                     </form>
