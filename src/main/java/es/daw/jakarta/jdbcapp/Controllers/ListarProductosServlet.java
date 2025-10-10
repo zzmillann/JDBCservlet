@@ -51,30 +51,7 @@ private static final Logger LOG = Logger.getLogger(ListarProductosServlet.class.
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
 
-        Optional<Producto> productos = Optional.empty();
-        String codigo = request.getParameter("codigoid") == null ? "" : request.getParameter("codigoid").trim();
 
-        if (codigo.isEmpty() ) {
-            request.setAttribute("error", "El código  no puede estar vacíos.");
-            getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
-            return;
-        }
-
-
-        try{
-
-            GenericDAO<Producto,Integer> dawP = new ProductoDAO();
-            productos = dawP.findById(Integer.parseInt(codigo));
-
-        }catch (SQLException e){
-            LOG.severe(e.getMessage());
-            request.setAttribute("error", e.getMessage());
-            getServletContext().getRequestDispatcher("/error.jsp").forward(request, response);
-            return;
-        }
-
-        request.setAttribute("productosId", productos);
-        getServletContext().getRequestDispatcher("/informeid.jsp").forward(request, response);
     }
 
     @Override

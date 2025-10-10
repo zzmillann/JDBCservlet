@@ -64,7 +64,7 @@
                     </form>
                 </td>
                 <td>
-                    <form action="productos/borrar" method="post" onsubmit="return confirm('¿Seguro que deseas borrar este producto?');">
+                    <form action="<%= request.getContextPath() %>/productos/borrar" method="post" onsubmit="return confirm('¿Seguro que deseas borrar este producto?');">
                         <input type="hidden" name="codigo" value="<%= p.getCodigo() %>">
                         <button type="submit" class="btn btn-danger btn-sm">🗑️</button>
                     </form>
