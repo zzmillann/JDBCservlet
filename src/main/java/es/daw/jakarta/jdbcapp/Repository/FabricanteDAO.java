@@ -43,6 +43,7 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
 
 
                         ));
+
             }
             return  fabricantes;
         }
@@ -52,10 +53,22 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
     @Override
     public void update(Fabricante entity) throws SQLException {
 
+        try(PreparedStatement ps = connection.prepareStatement("UPDATE fabricante SET nombre = ? WHERE codigo = ?;")){
+            ps.setString(1, entity.getNombre());
+            ps.setInt(2, entity.getCodigo());
+            ps.executeUpdate();
+
+        }
     }
 
     @Override
     public void delete(Integer integer) throws SQLException {
 
+        try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM fabricante WHERE codigo = ?")){
+            preparedStatement.setInt(1, integer);
+            preparedStatement.executeUpdate();
+
+
+        }
     }
 }
