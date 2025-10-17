@@ -17,15 +17,35 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
     public FabricanteDAO() throws SQLException {
         connection = DBConnection.getConnection();
     }
+
     @Override
     public void save(Fabricante entity) throws SQLException {
+
+        try (PreparedStatement ps = connection.prepareStatement("Insert into Fabricante (codigo, nombre) VALUES (?, ?)")) {
+            ps.setInt(1, entity.getCodigo());
+            ps.setString(2, entity.getNombre());
+            ps.executeUpdate();
+
+        }
+
 
     }
 
     @Override
     public Optional<Fabricante> findById(Integer integer) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Fabricante WHERE codigo = ?")) {
+            preparedStatement.setInt(1, integer);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Fabricante fr = new Fabricante(resultSet.getInt("codigo"), resultSet.getString("nombre"));
+                return Optional.of(fr);
+
+
+            }
+        }
         return Optional.empty();
     }
+
 
     @Override
     public List<Fabricante> findAll() throws SQLException {
@@ -33,7 +53,7 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
         String sql = "SELECT * FROM fabricante";
 
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 fabricantes.add(
@@ -45,7 +65,7 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
                         ));
 
             }
-            return  fabricantes;
+            return fabricantes;
         }
 
     }
@@ -53,7 +73,7 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
     @Override
     public void update(Fabricante entity) throws SQLException {
 
-        try(PreparedStatement ps = connection.prepareStatement("UPDATE fabricante SET nombre = ? WHERE codigo = ?;")){
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE fabricante SET nombre = ? WHERE codigo = ?;")) {
             ps.setString(1, entity.getNombre());
             ps.setInt(2, entity.getCodigo());
             ps.executeUpdate();
@@ -62,13 +82,19 @@ public class FabricanteDAO implements GenericDAO<Fabricante, Integer> {
     }
 
     @Override
-    public void delete(Integer integer) throws SQLException {
+    public void delete(Integer codigoFabricante) throws SQLException {
+        // Primero borramos los productos asociados
+        try (PreparedStatement ps1 = connection.prepareStatement(
+                "DELETE FROM producto WHERE codigo_fabricante = ?")) {
+            ps1.setInt(1, codigoFabricante);
+            ps1.executeUpdate();
+        }
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM fabricante WHERE codigo = ?")){
-            preparedStatement.setInt(1, integer);
-            preparedStatement.executeUpdate();
-
-
+        // Luego borramos el fabricante
+        try (PreparedStatement ps2 = connection.prepareStatement(
+                "DELETE FROM fabricante WHERE codigo = ?")) {
+            ps2.setInt(1, codigoFabricante);
+            ps2.executeUpdate();
         }
     }
 }
